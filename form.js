@@ -135,6 +135,10 @@ function timeToStr(h, m){
 }
 
 function submitNewOrder(){
+  var groupsRef = new Firebase('shareat.firebaseio.com/groups/');
+  var usersRef = new Firebase('shareat.firebaseio.com/users/');
+  var ordersRef = new Firebase('shareat.firebaseio.com/ordersByUserAndGroup/');
+
   if($("#slices li").size() == 0){
     alert("You must order at least one pizza slice! ");
     return;
@@ -146,6 +150,23 @@ function submitNewOrder(){
     var bitVec = $(this).attr("data").split("-")[1];
   });
   
+  
+}
+function submitOrder(){
+  var groupsRef = new Firebase('shareat.firebaseio.com/groups/');
+  var usersRef = new Firebase('shareat.firebaseio.com/users/');
+  var ordersRef = new Firebase('shareat.firebaseio.com/ordersByUserAndGroup/');
+
+  if($("#slices li").size() == 0){
+    alert("You must order at least one pizza slice! ");
+    return;
+  }
+  var timeHours = $("#addGroupTime").val().split("-")[0];
+  var timeMinutes= $("#addGroupTime").val().split("-")[1];
+  $("#slices li").each(function(){
+    var n = $(this).attr("data").split("-")[0];
+    var bitVec = $(this).attr("data").split("-")[1];
+  });
   
   
 }
