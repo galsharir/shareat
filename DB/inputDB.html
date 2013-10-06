@@ -8,8 +8,9 @@
 	<ol id='availableGroups'>
 	</ol>    	
     <script>
-		// get groups list
+			// get groups list
 	    	var groupsRef = new Firebase('shareat.firebaseio.com/groups/');
+	    	var ordersRef = new Firebase('shareat.firebaseio.com/ordersByUserAndGroup/');
 	    	var usersRef = new Firebase('shareat.firebaseio.com/users/');
 
 	    	// create a new group
@@ -18,7 +19,7 @@
 	    	// stAddress,cityAddress,stateAddress - strings
 	    	// longAddress,latAddress - strings of flouting points
 			function newGroup(order_time,foodCategory,stAddress,cityAddress,stateAddress,longAddress,latAddress) {
-				groupsRef.push({
+				return groupsRef.push({
        				ordered : 'no',
         			order_time: order_time,
 			        foodCategory : foodCategory,
@@ -28,7 +29,7 @@
 			            state: stateAddress,
 			            longitude : longAddress,
 			            latitude : latAddress}
-			    }) 
+			    }).name();
 			}
 
 			// Deleted all data at the Firebase location for group 'groupId'
@@ -75,10 +76,9 @@
 	        // add an order to a real order
 	        function addToNewOrder(orderNumber,orderQuantity,orderProduct) {
 	        	var orderRef = new Firebase('shareat.firebaseio.com/ordersByUserAndGroup/' + orderNumber + '/orderItems/');
-	        		orderRef.push([ quantity: orderQuantity, product: orderProduct}])	}
-	        	})
+	        		orderRef.push({ quantity: orderQuantity, product: orderProduct})	
 	        }
-
+	        
 	        // GOes over all orders, and removes all that have the same group
 	        function deleteOrders(groupId) {
 	        	ordersRef.once('value', 
@@ -86,7 +86,6 @@
 	        			var list = snapshot.val();
 				   		for (orderNum in list) {
 				   			if (list[orderNum].groupId == groupId) {
-				   				var ordersRef = new Firebase('https://shareat.firebaseio.com/ordersByUserAndGroup/' + 
 				   				orderRef.list[orderNum].remove;
 				   			}
 				   		}
@@ -110,21 +109,22 @@
 
 			// return a list of the orders the user has in one group
 	        function getUserOrders(facebookId,groupId) {
-	        	    var userOrdersList = [];
-					ordersRef.once('value', 
-		        		function(snapshot) {	
-		        			var list = snapshot.val();
-					   		for (orderNum in list) {
-					   			if (list[orderNum].facebookId == facebookId) {
-					   				if (list[orderNum].groupId == groupId) {
-					   					userOrdersList.push(list[orderNum]);
-					   				}
-					   			}
-				  			}
-				  		);	  
-				  	return userOrdersList;     
-				  	}	
-	        }	
+	         	var userOrdersList = [];
+				ordersRef.once('value', 
+		       		function(snapshot) {	
+		       			var list = snapshot.val();
+				   		for (orderNum in list) {
+				   			if (list[orderNum].facebookId == facebookId) {
+				   				if (list[orderNum].groupId == groupId) {
+				   					userOrdersList.push(list[orderNum]);
+				   				}
+				   			}
+			  			}
+			 		}
+		  		);	  
+			  	return userOrdersList;     
+			}	   	
+	   	
 	        // return a list of groups the user belongs to
 	       	function getUserGroups(facebookId) {
 				var useGroupsList = [];
@@ -151,11 +151,26 @@
 					   				userOrdersList.push(list[orderNum].orderItems);
 					   			}
 					   		}
-				  		);	  
-				  	return userOrdersList;     
-				  }	
-	        }	
+					   	}
+				  	);	  
+				return userOrdersList;     
+			}	
+	        
 
+	        // Check if user exist
+	        function userExist(facebookId) {
+	        	usersRef.once('value', 
+	        		function(snapshot) {
+	        			var userList = snapshot.val();
+	        			for (user in userList) {
+	        				if (userList[user].facebookId == facebookId) {
+	        					return true;
+	        				}
+	        			}
+	        			return false;
+	        		}
+	        	)
+	        }
 	
 	   </script>
   </body>
