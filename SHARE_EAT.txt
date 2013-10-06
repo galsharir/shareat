@@ -1,0 +1,36 @@
+SHARE EAT
+
+WebApp
+Smart Social food ordering
+
+Features:
+-Find people near you who want to order food
+-Manage group orders using voting mechanism
+-Find Ideal way to order (pizza slices)
+
+
+-Pay using venmo
+-menus through luco
+-login using facebook
+-
+
+
+
+- member rating
+
+-I'm  feeling Hungry
+
+Components:
+-------------
+1. OPEN A ROOM - Find restaurants + present menu
+	- Specify your current location (ZIP / google map)
+	- Connect to your facebook account
+	- Can be private / pubclic
+2. FIND ROOM - Locate near local friends with similar interest (first closest, then closest degree of friendship)
+	- Find nearest near you using googlemap
+	- Find degree of friendship
+3. PLACING ORDERS
+	- Gather orders from all members
+	- Present order for review by room owner
+	- Payment by owner
+	- Return using Venmo

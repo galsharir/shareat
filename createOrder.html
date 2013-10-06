@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Title</title>
+    <link rel="shortcut icon" href="./fav.ico"/>
+    <link href="./style.css" type="text/css" rel="stylesheet"/>
+    <link href="./form.css" type="text/css" rel="stylesheet"/>
+		<script type="text/javascript" src="./jQuery.js"></script>
+		<script type="text/javascript" src="./form.js"></script>
+		<!--<script src='https://cdn.firebase.com/v0/firebase.js'></script>-->
+	</head>
+  <body>
+    <div id="top">
+		</div>
+    <div id="container">
+			<ul id="navi">
+        <li><a href="./">Find Group</a></li>
+        <li><a href="./">Create Group</a></li>
+      </ul>
+      <div id="sidebar">
+      </div>
+      <div id="content">
+        <h1>Open a new food order</h1>
+        <h2>When do you want to order? </h2>
+        <p>
+          I can wait until 
+          <select id="addGroupTime" class="input">
+          </select>
+          .
+        </p>
+        <h2>What do you want to order? </h2>
+        <p>
+          <ul id="chooseCategory">
+            <li style="background:url(./img/pizza.png)" id="openCategoryPizza">Pizza</li>
+            <li style="background:url(./img/chinese.png)" id="openCategoryChinese">Chinese</li>
+            <li style="background:url(./img/mexican.png)" id="openCategoryMexican">Mexican</li>
+          </ul>
+        </p>
+        <div id="categoryPizza" class="category">
+          <div class="pointer" style="left:38px;"></div>
+          <div id="slicesPrev">
+            <div class="plate"></div>
+          </div>
+          <h2>Choose your pizza slices</h2>
+          <div id="addSlice">
+            <p>
+              <input class="input" type="checkbox" id="toppingOlives"/> Olives <br/>
+              <input class="input" type="checkbox" id ="toppingPeppers"/> Peppers <br/>
+              <input class="input" type="checkbox" id="toppingPeperoni"/> Peperoni <br/>
+              <input class="input" type="checkbox" id="toppingCheese"/> Cheese 
+            </p>
+            <p>
+              How many slices of this kind do you want?<br/>
+              <select class="input" id="sliceAmount">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+              </select>
+              <input class="inputBtn" type="button" value="Add slices" id="addSliceBtn"/> 
+            </p>
+          </div>
+          <ul id="slices">
+          </ul>
+        </div>
+      </div>
+			<ul id="footer">
+				<li><a href="http://www.hackmit.org/">hackMIT</a></li>
+				<li><a href="./">Entry 3</a></li>
+			</ul>
+    </div>
+  </body>
+</html>
