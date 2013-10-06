@@ -41,9 +41,7 @@
 
 	    	// create a new user
 			function newUser(facebookId,firstName,lastName,stAddress,cityAddress,stateAddress,longAddress,latAddress) {
-				var usersRef = new Firebase('shareat.firebaseio.com/users/');
-		        usersRef.push({
-		        	facebookId : facebookId,
+		        usersRef.child(facebookId).set({
 		        	userName : {
 			            firstName: firstName,
 			            lastName: lastName
@@ -54,29 +52,29 @@
 			            state: stateAddress,
 			            longitude : longAddress,
 			            latitude : latAddress}
-			        })
+			        });
 	        }
 
 	        // Orders is an array of matching. each order is represented by one [(orderQuantity,orderProduct)]
-	        // Must be entered with a real facebooj and group ID
+	        // Must be entered with a real facebook and group ID
 	        // orderProduct is a bainery vector (1,0,1,0) to represent yes and no on the pizza toppings
-	        function newOrder(userId,groupId,orderQuantity,orderProduct) {
+	        function newOrder(facebookId,groupId,orderQuantity,orderProduct) {
 	        	var ordersRef = new Firebase('shareat.firebaseio.com/ordersByUserAndGroup/');
 	        	if (groupId == null) {
 
 	        	}
-	        	ordersRef.push({
+	        	return ordersRef.push({
 	        		facebookId : facebookId,	        		
 	        		groupId : groupId,
 	        		orderItems : [
 		            	{ quantity : orderQuantity, product : orderProduct}],
-	        	})
+	        	}).name();
 	        }
 
 	        // add an order to a real order
 	        function addToNewOrder(orderNumber,orderQuantity,orderProduct) {
 	        	var orderRef = new Firebase('shareat.firebaseio.com/ordersByUserAndGroup/' + orderNumber + '/orderItems/');
-	        		orderRef.push({ quantity: orderQuantity, product: orderProduct})	
+	        		return orderRef.push({ quantity: orderQuantity, product: orderProduct}).name();	
 	        }
 	        
 	        // GOes over all orders, and removes all that have the same group
@@ -114,7 +112,7 @@
 		       		function(snapshot) {	
 		       			var list = snapshot.val();
 				   		for (orderNum in list) {
-				   			if (list[orderNum].facebookId == facebookId) {
+				   			if (list[orderNum] == facebookId) {
 				   				if (list[orderNum].groupId == groupId) {
 				   					userOrdersList.push(list[orderNum]);
 				   				}
@@ -132,7 +130,7 @@
 		        		function(snapshot) {	
 		        			var list = snapshot.val();
 					   		for (orderNum in list) {
-					   			if (list[orderNum].facebookId == facebookId) {
+					   			if (list[orderNum] == facebookId) {
 					   				userOrdersList.push(list[orderNum].groupId);
 					   			}
 					   		}
@@ -163,15 +161,15 @@
 	        		function(snapshot) {
 	        			var userList = snapshot.val();
 	        			for (user in userList) {
-	        				if (userList[user].facebookId == facebookId) {
-	        					return true;
+	        				if (userList[user] == facebookId) {
+	        					return "true";
 	        				}
 	        			}
-	        			return false;
+	        			return "false";
 	        		}
 	        	)
 	        }
-	
+			
 	   </script>
   </body>
 </html>
