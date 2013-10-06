@@ -1,0 +1,10 @@
+Download and install PIP & Setuptools for your python version
+
+http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip
+
+Add C:\python27 and C:\python27\scripts to your PATH environent variable
+
+
+in cmd:
+    pip install flask
+    pip install requests

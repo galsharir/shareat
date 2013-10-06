@@ -114,9 +114,7 @@ def oauth_authorized():
         }
     url = "https://api.venmo.com/oauth/access_token"
     response = requests.post(url, data)
-    print "XXX response" + str(response)
     response_dict = response.json()
-    print "XXX response_dict" + str(response_dict)
     access_token = response_dict.get('access_token')
     user = response_dict.get('user')
 
@@ -149,12 +147,19 @@ def joinOrder():
 def createOrder():
     return render_template('/createOrder.html')
 
+@app.route('/confirmOrder.html')
+def confirmOrder():
+    data = {'signed_in': session.has_key('venmo_token'),
+        'consumer_id': CONSUMER_ID,
+        'payment_sum': 3.2,
+        'group_owner':'GeorgeWashingtonTheThird'
+        }
+    print str(session)
+    return render_template('/confirmOrder.html', data=data)
+
 @app.route('/<page>')
 def show(page):
-
     try:
-        print "AAAAAAAA"
-        print page
         return open('static/%s' % page, 'rt').read().decode('utf-8')
     except Exception, e:
         print "NOT FOUND: " + page
@@ -166,4 +171,4 @@ def getImage(imgname):
     return open('static/img/%s' % imgname, 'rb').read()
 
 if __name__ == '__main__':
-    app.run()
+    app.run("localhost", 8000)
