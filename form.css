@@ -23,6 +23,7 @@
   cursor:pointer;
 }
 .category{
+  display:none;
   margin:20px -20px; 
   padding:0 240px 0 20px;
   position:relative;
@@ -42,8 +43,8 @@
   list-style:none;
   background:#eee;
   margin:2px 0;
-  padding:0 5px;
-  line-height:30px;
+  padding:5px;
+  line-height:20px;
 }
 #slicesPrev{
   position:absolute;

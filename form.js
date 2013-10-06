@@ -7,6 +7,7 @@ $(document).ready(function(){
   $("#openCategoryChinese, #openCategoryMexican").click(function(){
     $("#categoryPizza").hide();
   });
+  $("#submitBtn").click(submitNewOrder);
 });
 
 function initSelectTime(){
@@ -27,8 +28,8 @@ function initSelectTime(){
   else{
     m = 15;
   }
-  for(var i=0; i<100; i++){
-    $("#addGroupTime").append("<option>" + h + ":" + (m == 0 ? "00" : m) + "</option>");
+  for(var i=0; i<10; i++){
+    $("#addGroupTime").append("<option value='" + h + "-" + m + "'>" + timeToStr(h, m) + "</option>");
     m += 15;
     if(m == 60){
       h++;
@@ -115,5 +116,41 @@ function genPrev(){
   $("#slicesPrev").html(ht);
 }
 
+function timeToStr(h, m){
+  var pm = h >= 12 && h < 24;
+  var hh = h%12 == 0 ? 12 : h%12; 
+  str = "";
+  if(hh < 10)
+    str += "0";
+  str += hh;
+  str += ":";
+  if(m < 10)
+    str += "0";
+  str += m;
+  if(pm)
+    str += "PM";
+  else
+    str += "AM";
+  return str;
+}
 
-$("#gfdjhsgfs").html("")
+function submitNewOrder(){
+  if($("#slices li").size() == 0){
+    alert("You must order at least one pizza slice! ");
+    return;
+  }
+  var timeHours = $("#addGroupTime").val().split("-")[0];
+  var timeMinutes= $("#addGroupTime").val().split("-")[1];
+  $("#slices li").each(function(){
+    var n = $(this).attr("data").split("-")[0];
+    var bitVec = $(this).attr("data").split("-")[1];
+  });
+  
+  
+  
+}
+
+
+
+
+
