@@ -1,0 +1,162 @@
+<html>
+  	<head>
+  	<script src='https://cdn.firebase.com/v0/firebase.js'></script>
+  	<script src='jquery-1.10.2.min.js'></script>
+  	</head>
+  	<body>
+	<h1>update</h1>
+	<ol id='availableGroups'>
+	</ol>    	
+    <script>
+		// get groups list
+	    	var groupsRef = new Firebase('shareat.firebaseio.com/groups/');
+	    	var usersRef = new Firebase('shareat.firebaseio.com/users/');
+
+	    	// create a new group
+	    	// order_time - "hh:mm"
+	    	// foodCategory - "pizza"
+	    	// stAddress,cityAddress,stateAddress - strings
+	    	// longAddress,latAddress - strings of flouting points
+			function newGroup(order_time,foodCategory,stAddress,cityAddress,stateAddress,longAddress,latAddress) {
+				groupsRef.push({
+       				ordered : 'no',
+        			order_time: order_time,
+			        foodCategory : foodCategory,
+			        location: {
+			            streetAddress: stAddress,
+			            city: cityAddress,
+			            state: stateAddress,
+			            longitude : longAddress,
+			            latitude : latAddress}
+			    }) 
+			}
+
+			// Deleted all data at the Firebase location for group 'groupId'
+			function deleteGroup(groupId) {
+				var groupRef = new Firebase('shareat.firebaseio.com/groups/' + groupId + "/");
+				groupRef.remove();
+				deleteOrders(groupId);
+			}
+
+	    	// create a new user
+			function newUser(facebookId,firstName,lastName,stAddress,cityAddress,stateAddress,longAddress,latAddress) {
+				var usersRef = new Firebase('shareat.firebaseio.com/users/');
+		        usersRef.push({
+		        	facebookId : facebookId,
+		        	userName : {
+			            firstName: firstName,
+			            lastName: lastName
+			            },
+			        address: {
+			            streetAddress: stAddress,
+			            city: cityAddress,
+			            state: stateAddress,
+			            longitude : longAddress,
+			            latitude : latAddress}
+			        })
+	        }
+
+	        // Orders is an array of matching. each order is represented by one [(orderQuantity,orderProduct)]
+	        // Must be entered with a real facebooj and group ID
+	        // orderProduct is a bainery vector (1,0,1,0) to represent yes and no on the pizza toppings
+	        function newOrder(userId,groupId,orderQuantity,orderProduct) {
+	        	var ordersRef = new Firebase('shareat.firebaseio.com/ordersByUserAndGroup/');
+	        	if (groupId == null) {
+
+	        	}
+	        	ordersRef.push({
+	        		facebookId : facebookId,	        		
+	        		groupId : groupId,
+	        		orderItems : [
+		            	{ quantity : orderQuantity, product : orderProduct}],
+	        	})
+	        }
+
+	        // add an order to a real order
+	        function addToNewOrder(orderNumber,orderQuantity,orderProduct) {
+	        	var orderRef = new Firebase('shareat.firebaseio.com/ordersByUserAndGroup/' + orderNumber + '/orderItems/');
+	        		orderRef.push([ quantity: orderQuantity, product: orderProduct}])	}
+	        	})
+	        }
+
+	        // GOes over all orders, and removes all that have the same group
+	        function deleteOrders(groupId) {
+	        	ordersRef.once('value', 
+	        		function(snapshot) {	
+	        			var list = snapshot.val();
+				   		for (orderNum in list) {
+				   			if (list[orderNum].groupId == groupId) {
+				   				var ordersRef = new Firebase('https://shareat.firebaseio.com/ordersByUserAndGroup/' + 
+				   				orderRef.list[orderNum].remove;
+				   			}
+				   		}
+			  		});
+			}
+			
+			// return a list of the orders the user has
+	        function getUserOrders(facebookId) {
+	        		var userOrdersList = [];
+					ordersRef.once('value', 
+		        		function(snapshot) {	
+		        			var list = snapshot.val();
+					   		for (orderNum in list) {
+					   			if (list[orderNum].facebookId == facebookId) {
+					   				userOrdersList.push(list[orderNum]);
+					   			}
+					   		}
+				  		});	  
+				  	return userOrdersList;     
+				  	}	
+
+			// return a list of the orders the user has in one group
+	        function getUserOrders(facebookId,groupId) {
+	        	    var userOrdersList = [];
+					ordersRef.once('value', 
+		        		function(snapshot) {	
+		        			var list = snapshot.val();
+					   		for (orderNum in list) {
+					   			if (list[orderNum].facebookId == facebookId) {
+					   				if (list[orderNum].groupId == groupId) {
+					   					userOrdersList.push(list[orderNum]);
+					   				}
+					   			}
+				  			}
+				  		);	  
+				  	return userOrdersList;     
+				  	}	
+	        }	
+	        // return a list of groups the user belongs to
+	       	function getUserGroups(facebookId) {
+				var useGroupsList = [];
+					ordersRef.once('value', 
+		        		function(snapshot) {	
+		        			var list = snapshot.val();
+					   		for (orderNum in list) {
+					   			if (list[orderNum].facebookId == facebookId) {
+					   				userOrdersList.push(list[orderNum].groupId);
+					   			}
+					   		}
+				  		});	  
+				  	return useGroupsList;     
+				}	
+
+	        // return a list of all the orders in the group
+	        function getGroupOrders(groupId) {
+	        	var userOrdersList = [];
+					ordersRef.once('value', 
+		        		function(snapshot) {	
+		        			var list = snapshot.val();
+					   		for (orderNum in list) {
+					   			if (list[orderNum].groupId == groupId) {
+					   				userOrdersList.push(list[orderNum].orderItems);
+					   			}
+					   		}
+				  		);	  
+				  	return userOrdersList;     
+				  }	
+	        }	
+
+	
+	   </script>
+  </body>
+</html>
