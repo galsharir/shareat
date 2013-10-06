@@ -77,7 +77,7 @@ img{
 	line-height:40px;
 	list-style:none;
 }
-#navi li a:hover, #navi .curr a{
+#navi li a:hover, #navi a.curr{
 	color:black;
 	text-decoration:none;
 	background:white;
