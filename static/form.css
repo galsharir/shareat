@@ -1,0 +1,68 @@
+.field{
+}
+.inputBtn, .input{
+  padding:5px;
+  line-height:20px;
+  margin:0;
+}
+#chooseCategory{
+  margin:0;
+  padding:0;
+  height:100px;
+}
+#chooseCategory li{
+  float:left;
+  list-style:none;
+  margin:0 5px 0 0;
+  padding:80px 5px 0 5px;
+  line-height:20px;
+  width:90px;
+  height:20px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+.category{
+  display:none;
+  margin:20px -20px; 
+  padding:0 240px 0 20px;
+  position:relative;
+  border-top:2px solid #400;
+}
+.category .pointer{
+  position:absolute;
+  top:-34px;
+  background:url(./img/pointer.png);
+  width:68px;
+  height:34px;
+}
+#slices{
+  padding-left:0;
+}
+#slices li{
+  list-style:none;
+  background:#eee;
+  margin:2px 0;
+  padding:5px;
+  line-height:20px;
+}
+#slicesPrev{
+  position:absolute;
+  top:20px;
+  right:20px;
+  border:1p solid red;
+}
+.plate{
+  background:url(./img/plate.png);
+  width:200px;
+  height:200px;
+  margin-bottom:20px;
+}
+.slice{
+  position:absolute;
+  background:url(./img/slice.png);
+  width:200px;
+  height:200px;
+}
+
+

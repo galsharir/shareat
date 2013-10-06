@@ -1,0 +1,35 @@
+<section>
+    <div class="well">
+        <h2>Venmo API Integration Example!</h2>
+        {% if data.consumer_id is not number %}
+            <p>Error! ConsumerId not a number!</p>
+        {% elif not data.signed_in %}
+            <p>Clicking this button will redirect you to the Venmo OAuth login page. Once the user logs in, they will be redirected back to your app, with their access_token in the redirect url. Your app can then grab that token using the flask request module.</p>
+            <button class="btn btn-primary" ><a style="color:#fff" href="https://sandbox-api.venmo.com/oauth/authorize?client_id={{data.consumer_id}}&scope=make_payments,access_profile&response_type=code">Click here to authenticate with Venmo using OAuth</a></button>
+        {% else %}
+            <p>You are signed in as {{data.name}}.</p>
+            <button class="btn btn-warning" ><a style="color:#fff" href="logout">Logout!</a></button>
+            <h2>Make a payment on Venmo! <b>(Warning: this will use real money!!)</b></h2>
+                <div id="payment_note_input">
+                    <input id="payment_note" type="text" class="form-control" required placeholder="add a note to your payment">
+                </div>
+                <div id="payment_target_input" >
+                    <input id="payment_target" type="text" class="form-control" required placeholder="pay an email address">
+                </div>
+                <div id="payment_amount_input">
+                    <input id="payment_amount" type="text" class="form-control" required placeholder="enter the payment amount! ">
+                </div>
+                </br>
+                    <button class="btn btn-danger" type="button" onClick="javascript:make_payment('{{data.access_token}}');">POST to /payments</button>
+            <h3>Response:</h3>
+            <textarea id="make_payment_response" class="form-control" rows="3"></textarea>
+        </br>
+            <h2>Get a list of your payments!</h2>
+            <div class="input-group">
+                <button class="btn btn-primary" type="button" onClick="javascript:get_payments('{{data.access_token}}');">Get your payments</button>
+            </div>
+            </br>
+            <textarea class="form-control" id="get_payments_response" rows="10"></textarea>
+        {% endif %}
+    </div>
+</section>
